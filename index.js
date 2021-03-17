@@ -1,17 +1,21 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const port = process.env.PORT || 3000
-
+const port = process.env.PORT || 5001;
 app.use(bodyParser.urlencoded({
     extended: true
 }))
 
-app.use(bodyParser.json())
+//Ini Buat Listen Deploy Portnya
+app.listen(port, () => {
+    console.log(port);
+})
+
+//Buat ngebuat jsonnya
+app.use(express.json())
 
 //ini router
-const routers = require('./src/routes/routers')
-app.use(routers);
+
 
 //kalo error 404
 app.use((req, res, next) => {
@@ -30,7 +34,4 @@ app.use((err, req, res, next) => {
 })
 
 
-
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`)
-})
+app.get("/", (req, res) => res.status(200).send("Hello"))
